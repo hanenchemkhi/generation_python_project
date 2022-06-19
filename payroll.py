@@ -1,10 +1,12 @@
-#!/usr/bin/env python
+
 import csv
 import json
 from re import sub
 import pandas as pd
 
-"""Calculates the salary of an employee."""   
+"""
+Calculates the salary of an employee.
+"""
 def calculate_salary(rate, hours):
     rate_value = float(sub(r'[^\d.]', '', rate))
     if hours <= 40 :
@@ -26,7 +28,9 @@ def calculate_salary(rate, hours):
     net_pay =   gross_pay - (fed_tax+ state_tax+ fica)
     return regular_pay,ot_pay,gross_pay, fed_tax, state_tax, fica, net_pay
     
-"""Appends a record of an employee to a JSON file"""
+"""
+Appends a record of an employee to a JSON file
+"""
 def save_payroll(employee_info, salary):
     employee_dic = {"Employee Name": employee_info[0],\
                         "Hours Worked": employee_info[1], \
@@ -45,7 +49,8 @@ def save_payroll(employee_info, salary):
         json_file.seek(0) 
         json.dump(data_file, json_file, indent = 4) 
 
-"""For readability, we will convert the JSON file holding the payroll to EXCEL file.
+"""
+For readability, we will convert the JSON file holding the payroll to EXCEL file.
 """
 def transfer_json_to_excel():
     with open("payroll.json", "r") as json_file:
@@ -59,7 +64,9 @@ Setting up the payroll file in  Json format where all employee records will be s
 with open("payroll.json", "w") as file :
     file.write("[]")
 
-"""Calculate salary of all employees"""
+"""
+Calculate salary of all employees
+"""
 with open("employee.csv", "r") as emp_info : # Reads employee data from a CSV file 
     csv_reader = csv.reader(emp_info) 
     next(csv_reader) #skip the header
